@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  php:
+    build: containers/php
+    environment:
+      - PHPRC=/usr/local/etc/php/ini
+    expose:
+      - "9000"
+    volumes:
+      - ./src:/var/sites/cfm
+      - ./containers/php/ini:/usr/local/etc/php/ini
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  nginx:
+    build: containers/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/sites/cfm
+      - ./containers/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
